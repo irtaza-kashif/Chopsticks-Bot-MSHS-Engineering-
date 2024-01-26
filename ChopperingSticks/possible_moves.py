@@ -1,6 +1,6 @@
 def possTreeP2(posP1, posP2):
     
-    # List of all possibly moves that player2 can make, even if some give the exact same position, end the game, or are impossible to make
+    # List of all possible moves that player2 can make, even if some give the exact same position, end the game, or are impossible to make
     possibilities = [[posP1, [posP2[0] + 1, posP2[1] - 1]],
             [posP1, [posP2[0] + 2, posP2[1] - 2]],
             [posP1, [posP2[0] + 3, posP2[1] - 3]],
