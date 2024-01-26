@@ -1,8 +1,8 @@
 from determine_move import find_best_move
 
-# Input players move. ex. (LEFT,RIGHT), (RIGHT,LEFT), (TRANSFER,2,0) in the order of (PLAYER,BOT) with the acception of TRANSFER
+# Input players move. ex. (LEFT,RIGHT), (RIGHT,LEFT), (TRANSFER,2,0) in the order of (PLAYER,BOT) with the exception of TRANSFER
 # Return bots updated hand. ex. [4, 0], [3, 2]
-# Output bots next move. ex. (LEFT,RIGHT), (RIGHT,LEFT), (TRANSFER,2,0) in the order of (BOT,PLAYER) with the acception of TRANSFER
+# Output bots next move. ex. (LEFT,RIGHT), (RIGHT,LEFT), (TRANSFER,2,0) in the order of (BOT,PLAYER) with the exception of TRANSFER
 
 def update_pos():
     if input[0] == "LEFT":
