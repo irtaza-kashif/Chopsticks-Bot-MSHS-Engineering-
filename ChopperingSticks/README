@@ -1,1 +1,2 @@
-This is where the Chopping of sticks happens
+Determines the best possible move for the bot using the Minimax Algorithm
+Communicates directly with Arduino to display the bots current hand, as well as the bot's next move
