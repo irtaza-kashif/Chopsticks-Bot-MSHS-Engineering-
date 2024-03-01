@@ -1,6 +1,7 @@
 from determine_move import find_best_move
+import time
 
-# communication with Arduino ports
+# Direct communication with Arduino
 import serial.tools.list_ports
 
 ports = serial.tools.list_ports.comports()
@@ -11,14 +12,15 @@ portsList = []
 for onePort in ports:
     portsList.append(str(onePort))
     print(str(onePort))
-    
-val = input("Select Port: COM")
+
+
+val = input("Select port: COM")
 
 for x in range(0, len(portsList)):
     if portsList[x].startswith("COM" + str(val)):
         portVar = "COM" + str(val)
         print(portVar)
-        
+
 serialInst.baudrate = 9600
 serialInst.port = portVar
 serialInst.open()
@@ -53,31 +55,31 @@ def update_pos():
 def find_action():
     if end_position[1] == current_position[1]: # If the player is not hit (Transfer occured)
         # print(f"TRANSFER,{end_position[0][0]},{end_position[0][1]}")
-        serialInst.write(f"TRANSFER,{end_position[0][0]},{end_position[0][1]}".encode('utf-8'))
+        return f"TRANSFER,{end_position[0][0]},{end_position[0][1]}"
         
     if current_position[1][0] != end_position[1][0]: # If the players left hand isn't the same after the action (left hand got hit)
         if (current_position[0][0] + current_position[1][0] == end_position[1][0]) or (current_position[0][0] + current_position[1][0] >= 5 and end_position[1][0] == 0): # if bot's left hand and player's left hand add up to players final left hand (bot left hit player left)
             # print("LEFT,LEFT")
-            serialInst.write("LEFT,LEFT".encode('utf-8'))
+            return "LEFT,LEFT"
         elif (current_position[0][1] + current_position[1][0] == end_position[1][0]) or (current_position[0][1] + current_position[1][0] >= 5 and end_position[1][0] == 0): # if bot's right hand and player's left hand add up to players final left hand (bot right hit player left)
             # print("RIGHT,LEFT")
-            serialInst.write("RIGHT,LEFT".encode('utf-8'))
+            return "RIGHT,LEFT"
     elif current_position[1][1] != end_position[1][1]: # If the players right hand isn't the same after the action (right hand got hit)
         if (current_position[0][0] + current_position[1][1] == end_position[1][1]) or (current_position[0][0] + current_position[1][1] >= 5 and end_position[1][1] == 0): # if bot's left hand and player's right hand add up to players final right hand (bot left hit player right)
             # print("LEFT,RIGHT")
-            serialInst.write("LEFT,RIGHT".encode('utf-8'))
+            return"LEFT,RIGHT"
         elif (current_position[0][1] + current_position[1][1] == end_position[1][1]) or (current_position[0][1] + current_position[1][1] >= 5 and end_position[1][1] == 0): # if bot's right hand and player's right hand add up to players final right hand (bot right hit player right)
             # print("RIGHT,RIGHT")
-            serialInst.write("RIGHT,RIGHT".encode('utf-8'))
+            return "RIGHT,RIGHT"
 
 bot = [1, 1]
 player = [1, 1]
 
 input = input("INPUT: ").split(",")
-
 current_position = update_pos()
-# print(current_position[0])
-serialInst.write(str(current_position[0]).encode('utf-8')) # Returns the bots position after the player's action
+serialInst.write(str(current_position[0]).replace("[", "").replace(" ", "").replace("]", "").encode("utf-8"))
 end_position = find_best_move(current_position)
 
-find_action() # Returns the bot's next move
+command = find_action()
+time.sleep(2) # this could change depending on the move, needs a certain time difference in inputs for the next input to be read
+serialInst.write(command.encode("utf-8"))
