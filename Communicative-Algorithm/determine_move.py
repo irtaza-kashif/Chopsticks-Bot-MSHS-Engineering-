@@ -1,6 +1,6 @@
 from possible_moves import p1Moves, p2Moves
 
-searchDepth = 15
+searchDepth = 12
 
 def evaluatePos(position):
     if position[0] == [0, 0]:
