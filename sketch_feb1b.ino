@@ -13,7 +13,7 @@ void setup() {
   for(int i = 0; i < SERVOS; i++) {
     myservo[i].attach(servo_pins[i]);
     myservo[i].write(closed_pos);
-    delay(500);
+    delay(250);
   }
 
   setHands(lCount, rCount);
@@ -68,20 +68,20 @@ void setHands(int lCount, int rCount) {
   //Right hand
   for(int i = 0; i<rCount; i++){
     myservo[i].write(open_pos);
-    delay(500);
+    delay(250);
   }
   for(int i = 3; i>=rCount; i--){
     myservo[i].write(closed_pos);
-    delay(500);
+    delay(250);
   }
 
   //Left hand
   for(int i = 4; i<lCount+4; i++){
     myservo[i].write(open_pos);
-    delay(500);
+    delay(250);
   }
   for(int i = 7; i>=lCount+4; i--){
     myservo[i].write(closed_pos);
-    delay(500);
+    delay(250);
   }
 }
