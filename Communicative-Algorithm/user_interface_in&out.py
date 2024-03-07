@@ -118,8 +118,8 @@ root.resizable(False, False)
 root.configure(bg = "gray")
 
 def printInput():
-    transferInput.delete("1.0", tk.END)
     main("TRANSFER," + transferInput.get(1.0, "end-1c"))
+    transferInput.delete("1.0", tk.END)
 
 def printll():
     main("LEFT,LEFT")
