@@ -42,20 +42,20 @@ void loop() {
         rCount = command.charAt(11) - '0';
         setHands(lCount, rCount);
       } else if (command.charAt(0) == 'L') {
-          if (commmand.charAt(5) == 'L'){
+          if (command.charAt(5) == 'L'){
 
           }
-          if (commmand.charAt(5) == 'R'){
+          if (command.charAt(5) == 'R'){
 
           }
 
         } 
       
         else if (command.charAt(0) == 'R') {
-          if (commmand.charAt(6) == 'L'){
+          if (command.charAt(6) == 'L'){
 
           }
-          if (commmand.charAt(6) == 'R'){
+          if (command.charAt(6) == 'R'){
 
           }
         }
