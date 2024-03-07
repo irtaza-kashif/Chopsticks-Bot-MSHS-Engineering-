@@ -2,7 +2,7 @@
 #define SERVOS 10
 Servo myservo[SERVOS];
 
-int servo_pins[SERVOS] = {2,3,4,5,6,7,8,9};
+int servo_pins[SERVOS] = {2,3,4,5,6,7,8,9,10,11};
 int closed_pos = 0;
 int open_pos = 90;
 int rCount = 0;
@@ -42,22 +42,25 @@ void loop() {
         rCount = command.charAt(11) - '0';
         setHands(lCount, rCount);
       } else if (command.charAt(0) == 'L') {
-        // TODO add wrist movement
+          if (commmand.charAt(5) == 'L'){
 
-        for (int i = 0; i < 6; i++) {
-          digitalWrite(LED_BUILTIN, HIGH);
-          delay(50); // The built in light turning on for a second indicates an attack
-          digitalWrite(LED_BUILTIN, LOW);
-          delay(50);
+          }
+          if (commmand.charAt(5) == 'R'){
+
+          }
+
+        } 
+      
+        else if (command.charAt(0) == 'R') {
+          if (commmand.charAt(6) == 'L'){
+
+          }
+          if (commmand.charAt(6) == 'R'){
+
+          }
         }
-      } else if (command.charAt(0) == 'R') {
-        for (int i = 0; i < 6; i++) {
-          digitalWrite(LED_BUILTIN, HIGH);
-          delay(50); // The built in light turning on for a second indicates an attack
-          digitalWrite(LED_BUILTIN, LOW);
-          delay(50);
-        }
-      }
+
+      
     }
   }
 }
