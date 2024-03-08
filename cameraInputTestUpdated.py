@@ -12,6 +12,12 @@ hand = mpHands.Hands()
 
 tipIds = [4, 8, 12, 16, 20]
 
+width = 650
+height = 500
+bueno = False
+start_point =(560, 386)
+end_point =(800, 595)
+
 while(True):
     # Capture the video frame
     # by frame
@@ -34,7 +40,31 @@ while(True):
         else:
             leftHand = result.multi_hand_landmarks[1]
             rightHand = result.multi_hand_landmarks[0]
-        print(leftHand.landmark[0].y)
+        for n in range(20):
+            if (rightHand.landmark[n].x*width >= 225 and leftHand.landmark[n].x*width <= 475):
+                handswapping = True
+            if (rightHand.landmark[n].x*width <= 200 and rightHand.landmark[n].y*height >= 325):
+                input = "RIGHT,RIGHT"
+                handswapping = False
+            if (leftHand.landmark[n].x*width >= 500 and leftHand.landmark[n].y*height >= 325):
+                input = "LEFT,LEFT"
+                handswapping = False
+            if (leftHand.landmark[n].x*width <= 200 and leftHand.landmark[n].y*height >= 325):
+                input = "LEFT,RIGHT"
+                handswapping = False
+            if (rightHand.landmark[n].x*width >= 500 and rightHand.landmark[n].y*height >= 325):
+                input = "RIGHT,LEFT"
+                handswapping = False
+            if (rightHand.landmark[n].x*width <= 225 and leftHand.landmark[n].x*width >= 475 and rightHand.landmark[n].y*height <= 325 and leftHand.landmark[n].y*height <= 325):
+                if(handswapping == True):
+                    input = "TRANSFER," + str(leftCount) + "," + str(rightCount)
+                bueno = True
+            
+        if (bueno == True):
+            print(input)
+            bueno = False
+            #input thing here
+            your_mom = "gay"
         # if (result.multi_handedness[1].classification[0].label == "Left"):
         #     leftHand = result.multi_hand_landmarks[1]
         # else:
@@ -92,8 +122,16 @@ while(True):
         pass
 
     # Display the resulting frame
+    cv2.rectangle(frame, (0, 0), (200, 275), (0, 255, 255), thickness= 3, lineType=cv2.LINE_8) #yellow
+    cv2.rectangle(frame, (450, 0), (650, 275), (255, 0, 255), thickness= 3, lineType=cv2.LINE_8)#purple 
+    cv2.rectangle(frame, (225, 0), (425, 275), (0, 255, 0), thickness= 3, lineType=cv2.LINE_8)#green
+    cv2.rectangle(frame, (0, 300), (175, 500), (0, 0, 255), thickness= 3, lineType=cv2.LINE_8)#red
+    cv2.rectangle(frame, (475, 300), (650, 500), (255, 0, 0), thickness= 3, lineType=cv2.LINE_8)#blue
     cv2.imshow('frame', frame)
-
+    path = 'C:/Users/irtaz/downloads/Hand Detection Code/Untitled.png'
+    image = cv2.imread(path) 
+    # cv2.namedWindow("Display", cv2.WINDOW_AUTOSIZE
+    # cv2.imshow('Display', image)
     # the 'q' button is set as the
     # quitting button you may use any
     # desired button of your choice
