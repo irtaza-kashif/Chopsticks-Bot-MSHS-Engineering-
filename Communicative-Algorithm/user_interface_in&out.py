@@ -2,10 +2,14 @@ from determine_move import find_best_move
 import serial.tools.list_ports
 import time
 import tkinter as tk
-
+from cameraInputTestUpdated import video
+import cv2
+import mediapipe as mp
+    # define a video capture object
+vid = cv2.VideoCapture(1)
 bot = [1, 1]
 player = [1, 1]
-
+current_position = "NA"
 # Direct communication with Arduino
 ports = serial.tools.list_ports.comports()
 serialInst = serial.Serial()
@@ -98,6 +102,8 @@ def find_action(current_position, end_position):
             return "RIGHT,RIGHT"
 
 def main(input):
+    current_position = "NA"
+    current_position = video(current_position, vid)
     current_position = update_pos(input)
     serialInst.write(str(current_position[0]).replace("[", "").replace(" ", "").replace("]", "").encode("utf-8"))
     print(current_position)
@@ -109,6 +115,7 @@ def main(input):
     serialInst.write(command.encode("utf-8"))
     print(command)
     print(update_final_pos(command))
+    print("i did that shit")
 
 # User interface set-up
 root = tk.Tk()
@@ -154,5 +161,8 @@ ll_btn.place(x = 10, y = 10)
 lr_btn.place(x = 10, y = 81)
 rl_btn.place(x = 435, y = 10)
 rr_btn.place(x = 435, y = 81)
-
+# After the loop release the cap object
+vid.release()
+# Destroy all the windows
+cv2.destroyAllWindows()
 root.mainloop()
