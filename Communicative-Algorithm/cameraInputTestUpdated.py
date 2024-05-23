@@ -1,9 +1,7 @@
 # import the opencv library
-def video(input):
+def video(input, vid):
     import cv2
     import mediapipe as mp
-    # define a video capture object
-    vid = cv2.VideoCapture(1)
 
     mpHands = mp.solutions.hands
     mpDrawing = mp.solutions.drawing_utils

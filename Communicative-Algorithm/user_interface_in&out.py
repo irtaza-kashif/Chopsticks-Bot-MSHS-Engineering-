@@ -5,7 +5,7 @@ import tkinter as tk
 from cameraInputTestUpdated import video
 import cv2
 import mediapipe as mp
-    # define a video capture object
+# define a video capture object
 vid = cv2.VideoCapture(1)
 bot = [1, 1]
 player = [1, 1]
