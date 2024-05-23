@@ -1,21 +1,21 @@
 # import the opencv library
-def video(input, vid):
+def video(input):
     import cv2
     import mediapipe as mp
-
+    vid = cv2.VideoCapture(1)
     mpHands = mp.solutions.hands
     mpDrawing = mp.solutions.drawing_utils
     hand = mpHands.Hands()
 
     tipIds = [4, 8, 12, 16, 20]
-
     width = 650
     height = 500
     bueno = False
     start_point =(560, 386)
     end_point =(800, 595)
     handswapping = False
-    while (input == "NA"):
+    done = False
+    while (done == False):
         # Capture the video frame
         # by frame
         ret, frame = vid.read()
@@ -29,7 +29,6 @@ def video(input, vid):
         rightLandmarks = []
         leftFingers = []
         rightFingers = []
-
         if result.multi_hand_landmarks and len(result.multi_hand_landmarks) == 2:
             if (result.multi_handedness[0].classification[0].label == "Right"):
                 leftHand = result.multi_hand_landmarks[0]
@@ -57,7 +56,7 @@ def video(input, vid):
                         input = "TRANSFER," + str(leftCount) + "," + str(rightCount)
                     bueno = True
                 
-            
+            print(input)
             # if (result.multi_handedness[1].classification[0].label == "Left"):
             #     leftHand = result.multi_hand_landmarks[1]
             # else:
@@ -124,9 +123,7 @@ def video(input, vid):
         path = 'C:/Users/irtaz/downloads/Hand Detection Code/Untitled.png'
         image = cv2.imread(path) 
         if (bueno == True):
-                bueno = False
-        else:
-            input = "NA"
+                done = True
         # cv2.namedWindow("Display", cv2.WINDOW_AUTOSIZE
         # cv2.imshow('Display', image)
         # the 'q' button is set as the

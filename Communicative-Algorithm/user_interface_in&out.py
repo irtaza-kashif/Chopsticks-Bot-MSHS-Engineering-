@@ -3,13 +3,9 @@ import serial.tools.list_ports
 import time
 import tkinter as tk
 from cameraInputTestUpdated import video
-import cv2
-import mediapipe as mp
-# define a video capture object
-vid = cv2.VideoCapture(1)
 bot = [1, 1]
 player = [1, 1]
-current_position = "NA"
+
 # Direct communication with Arduino
 ports = serial.tools.list_ports.comports()
 serialInst = serial.Serial()
@@ -102,8 +98,6 @@ def find_action(current_position, end_position):
             return "RIGHT,RIGHT"
 
 def main(input):
-    current_position = "NA"
-    current_position = video(current_position, vid)
     current_position = update_pos(input)
     serialInst.write(str(current_position[0]).replace("[", "").replace(" ", "").replace("]", "").encode("utf-8"))
     print(current_position)
@@ -116,53 +110,51 @@ def main(input):
     print(command)
     print(update_final_pos(command))
     print("i did that shit")
+while (True):
+    user_input = "NA"
+    main(video(user_input))
+# # User interface set-up
+# root = tk.Tk()
+# root.title("Chopsticks Interface")
+# root.geometry("600x450")
+# root.resizable(False, False)
+# root.configure(bg = "gray")
 
-# User interface set-up
-root = tk.Tk()
-root.title("Chopsticks Interface")
-root.geometry("600x450")
-root.resizable(False, False)
-root.configure(bg = "gray")
+# def printInput():
+#     main("TRANSFER," + transferInput.get(1.0, "end-1c"))
+#     transferInput.delete("1.0", tk.END)
 
-def printInput():
-    main("TRANSFER," + transferInput.get(1.0, "end-1c"))
-    transferInput.delete("1.0", tk.END)
+# def printll():
+#     main("LEFT,LEFT")
 
-def printll():
-    main("LEFT,LEFT")
+# def printlr():
+#     main("RIGHT,LEFT")
 
-def printlr():
-    main("RIGHT,LEFT")
+# def printrl():
+#     main("LEFT,RIGHT")
 
-def printrl():
-    main("LEFT,RIGHT")
+# def printrr():
+#     main("RIGHT,RIGHT")
 
-def printrr():
-    main("RIGHT,RIGHT")
+# transferInput = tk.Text(root, height = 1, width = 3, font = ("Ariel", 40, "bold"))
+# transferInput.place(x = 253, y = 336)
 
-transferInput = tk.Text(root, height = 1, width = 3, font = ("Ariel", 40, "bold"))
-transferInput.place(x = 253, y = 336)
+# transfer_lbl = tk.Label(root, text = "Type Transfering Moves Here. ex. \"2,0\", \"3,2\"", font = ("Ariel", 10, "bold"), background = "gray")
+# transfer_lbl.place(x = 160, y = 310)
+# left_lbl = tk.Label(root, text = "Hit Bot's Left Hand", font = ("Ariel", 10, "bold"), background = "gray")
+# left_lbl.place(x = 10, y = 150)
+# right_lbl = tk.Label(root, text = "Hit Bot's Right Hand", font = ("Ariel", 10, "bold"), background = "gray")
+# right_lbl.place(x = 452, y = 150)
 
-transfer_lbl = tk.Label(root, text = "Type Transfering Moves Here. ex. \"2,0\", \"3,2\"", font = ("Ariel", 10, "bold"), background = "gray")
-transfer_lbl.place(x = 160, y = 310)
-left_lbl = tk.Label(root, text = "Hit Bot's Left Hand", font = ("Ariel", 10, "bold"), background = "gray")
-left_lbl.place(x = 10, y = 150)
-right_lbl = tk.Label(root, text = "Hit Bot's Right Hand", font = ("Ariel", 10, "bold"), background = "gray")
-right_lbl.place(x = 452, y = 150)
+# transfer_btn = tk.Button(root, text = "Transfer", command = printInput, height = 2, width = 10)
+# transfer_btn.place(x = 260, y = 408)
 
-transfer_btn = tk.Button(root, text = "Transfer", command = printInput, height = 2, width = 10)
-transfer_btn.place(x = 260, y = 408)
-
-ll_btn = tk.Button(root, text = "LEFT", command = printll, height = 4, width = 20)
-lr_btn = tk.Button(root, text = "RIGHT", command = printlr, height = 4, width = 20)
-rl_btn = tk.Button(root, text = "LEFT", command = printrl, height = 4, width = 20)
-rr_btn = tk.Button(root, text = "RIGHT", command = printrr, height = 4, width = 20)
-ll_btn.place(x = 10, y = 10)
-lr_btn.place(x = 10, y = 81)
-rl_btn.place(x = 435, y = 10)
-rr_btn.place(x = 435, y = 81)
-# After the loop release the cap object
-vid.release()
-# Destroy all the windows
-cv2.destroyAllWindows()
-root.mainloop()
+# ll_btn = tk.Button(root, text = "LEFT", command = printll, height = 4, width = 20)
+# lr_btn = tk.Button(root, text = "RIGHT", command = printlr, height = 4, width = 20)
+# rl_btn = tk.Button(root, text = "LEFT", command = printrl, height = 4, width = 20)
+# rr_btn = tk.Button(root, text = "RIGHT", command = printrr, height = 4, width = 20)
+# ll_btn.place(x = 10, y = 10)
+# lr_btn.place(x = 10, y = 81)
+# rl_btn.place(x = 435, y = 10)
+# rr_btn.place(x = 435, y = 81)
+# root.mainloop()
